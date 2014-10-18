@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, session
+from flask import Flask, render_template, jsonify, session, flash
 from flask_oauth import OAuth
 
 app = Flask(__name__)
@@ -36,11 +36,14 @@ def get_tweets():
 		'count':'50',
 		})
 
+	print resp.data
+
 	if resp.status == 200:
 		tweets = resp.data
 	else:
 		tweets = None
 		flash('whoops - couldn\'t get tweets :(')
+
 
 	return tweets
 
@@ -60,7 +63,8 @@ def get_tweet_html(id):
 	resp = twitter.get('statuses/oembed.json', data = {
 		'id': id
 		})
-
+	print "\n\n\n"
+	print resp.data
 	if resp.status == 200:
 		tweet_html = resp.data
 	else:
