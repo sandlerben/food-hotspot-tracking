@@ -9,9 +9,10 @@
 	<style type="text/css">
 		html {
 			height: 100%;
-			background: linear-gradient(rgba(21, 55, 75, 0.6), rgba(21, 55, 75, 0.6)), url('static/img/wfp.jpg');
+			background: linear-gradient(rgba(21, 55, 75, 0.7), rgba(21, 55, 75, 0.7)), url('static/img/wfp.jpg');
 			/*			background: rgba(0,255,255, 0.5);*/
-			height: 100%;
+			background-size: cover;
+      height: 100%;
 			display: block;
 		}
 		div#buttons {
@@ -21,24 +22,39 @@
 			transform: translateY(-50%);
 			display: block;
 			text-align: center;
+      color: rgba(255,255,255, 0.95);
 		}
 		.button {
-			margin: 5px;
+			margin: 20px;
 			display: inline-block;
 			color: white;
-			font-weight: bold;
-			background-color: #009dff;
+      letter-spacing: 2px;
+      font-weight: 300;
+      font-size: 275%;
 			padding: 10px;
 			border-radius: 5px;
 			text-decoration: none;
+      color: rgba(255,255,255, 0.7);
 		}
+    .button:hover {
+      color: rgba(255,255,255, .95);
+    }
 		aside {
 			color: white;
 			position: absolute;
 			bottom: 2px;
 			right: 2px;
 			font-size: 80%;
-		}
+  		color: rgba(255,255,255, .7);
+    }
+    h1 {
+      position: center;
+      margin: 20px;
+      margin-bottom: 25px;
+      font-size: 60px;
+      letter-spacing: 3px;
+      opacity: 80%;
+    }
 	</style>
 
 	<script src="static/js/jquery.particleground.min.js"></script>
@@ -59,14 +75,16 @@
 </head>
 
 <body>
-	{% include 'header.html' %}
+  <!-- {% include 'header.html' %} -->
 	<div id="pg">
-		<div id="buttons">
-			<a href="/app" class="button">Launch app</a>
-			<a href="http://wfp.org" class="button">WFP.org</a>
+   		<div id="buttons">
+        <h1>FOOD&nbsp;&nbsp;HOTSPOT&nbsp;&nbsp;TRACKING</h1>
+  			<a href="/app" class="button">LAUNCH APP</a>
+        <span style="color: white; font-size: 300%; font-weight: 300; color: rgba(255,255,255, .7);">  |  </span>
+  			<a href="http://wfp.org" target="_blank" class="button">WFP SITE</a>
 		</div>
 	</div>
-	<aside>Built at Hack the Change 2014 by Max McCarthy, Yoni Nachmany, and Ben Sandler</aside>
+	<aside>Built at Hack the Change 2014 by Max McCarthy, Yoni Nachmany, Ben Sandler, and Nancy Wong</aside>
 </body>
 
 </html>
