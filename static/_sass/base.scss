@@ -3,69 +3,77 @@
 @import url(http://fonts.googleapis.com/css?family=Lato:300,300italic,400,700,400italic,700italic);
 
 html {
-	background-color: #efefef;
-	font-family: "Lato", sans-serif;
+    background-color: #efefef;
+    font-family: "Lato", sans-serif;
 }
 
 body {}
 
 .wrapper {
-	max-width: 960px;
-	margin: 0 auto;
+    max-width: 960px;
+    margin: 0 auto;
 }
 
 #map-canvas {
-	padding: 0;
-	width: 100%;
-	z-index: 0;
-	display: inline-block;
-	height: 600px;
+    padding: 0;
+    width: 100%;
+    z-index: 0;
+    display: inline-block;
+    height: 600px;
 }
 
 #panel {
-	position: absolute;
-	top: 25px;
-	left: 50%;
-	margin-left: -180px;
-	z-index: 5;
-	background-color: #fff;
-	padding: 5px;
-	border: 1px solid #999;
+    position: absolute;
+    top: 25px;
+    left: 50%;
+    margin-left: -180px;
+    z-index: 5;
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+}
+
+ul {
+    margin: 0 auto;
+}
+
+ul li.item {
+    width: 500px;
+    margin-bottom: 10px;
 }
 
 header {
-	top: 0;
-	position: absolute;
-	display: block;
-	width: 100%;
-	background-color: rgba(68, 68, 68, 0.7);
-	color: white;
-	text-align: center;
-	padding: 20px 0;
-	h1 {
-		font-weight: bold;
-		font-size: 1.5em;
-	}
-	z-index: 10;
+    top: 0;
+    position: absolute;
+    display: block;
+    width: 100%;
+    background-color: rgba(68, 68, 68, 0.7);
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    h1 {
+        font-weight: bold;
+        font-size: 1.5em;
+    }
+    z-index: 10;
 }
 
 main {
-	display: inline;
-	height: 100%;
-	width: 40%;
-	overflow: scroll;
-	padding: 40px 0;
-	color: black;
-	max-width: 960px;
-	h1 {
-		font-weight: bold;
-		font-style: 1.5em;
-	}
+    height: 100%;
+    margin: 0 auto;
+    padding: 40px 0;
+    color: black;
+    h1 {
+        text-align: center;
+        font-weight: bold;
+        font-size: 24px;
+        margin-bottom: 50px;
+    }
 }
 
 footer {
-	background-color: #ddd;
-	color: gray;
-	font-size: 80%;
-	padding: 20px 0;
+    background-color: #ddd;
+    color: gray;
+    font-size: 80%;
+    padding: 20px 0;
 }

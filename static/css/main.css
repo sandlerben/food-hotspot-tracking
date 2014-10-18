@@ -56,6 +56,13 @@ html {
   padding: 5px;
   border: 1px solid #999; }
 
+ul {
+  margin: 0 auto; }
+
+ul li.item {
+  width: 500px;
+  margin-bottom: 10px; }
+
 header {
   top: 0;
   position: absolute;
@@ -71,16 +78,15 @@ header {
     font-size: 1.5em; }
 
 main {
-  display: inline;
   height: 100%;
-  width: 40%;
-  overflow: scroll;
+  margin: 0 auto;
   padding: 40px 0;
-  color: black;
-  max-width: 960px; }
+  color: black; }
   main h1 {
+    text-align: center;
     font-weight: bold;
-    font-style: 1.5em; }
+    font-size: 24px;
+    margin-bottom: 50px; }
 
 footer {
   background-color: #ddd;
