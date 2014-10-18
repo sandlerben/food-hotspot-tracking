@@ -8,7 +8,7 @@ app.secret_key = 't\xea\x85B\xda&\xc3\xdf\x9c\x8f=\xf7\xfa\xa0\xe6\xd3\xf7\x899\
 @app.route('/write')
 def write():
 	tweets_dict = {
-	'tweet' : { 'html': 'abcd', 'coords': 11.1111111, 1.1111111}
+	'tweet' : { 'html': 'abcd', 'coords': 11.1111111, 1.1111111},
 	'tweet' : { 'html': 'efgh', 'coords': 32.6027461, 2.2222222}
 	}
 	tweets_html = models.AllTweets.query.all('html')
