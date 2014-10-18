@@ -1,31 +1,15 @@
 from flask import Flask, render_template, jsonify, session, flash
 from flask_oauth import OAuth
 import json, models
+from datetime import datetime
+from models import Tweet
+from models import dbsession
+from flask.ext.sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+db = SQLAlchemy(app)
 
 app.secret_key = 't\xea\x85B\xda&\xc3\xdf\x9c\x8f=\xf7\xfa\xa0\xe6\xd3\xf7\x899\xdf\xc0\xdb\x7f<'
-
-
-@app.route('/write')
-def write():
-	tweets_dict = {
-	'tweet' : { 'html': 'abcd', 'coordinates': {11.1111111, 1.1111111}},
-	'tweet' : { 'html': 'efgh', 'coordinates': {32.6027461, 2.2222222}}
-	}
-	tweets_html = models.AllTweets.query.all('html')
-	tweets_coords = models.AllTweets.query.all('coordinates')
-	u = models.AllTweets(tweets_dict, tweets_html, tweets_coords)
-	db.session.add(u)
-	db.session.commit()
-"""
-@app.route('/display')
-def display():
-	tweets_dict
-	models.AllTweets.query.all('tweets_dict')
-	models.AllTweets.query.all('tweets_html')
-	models.AllTweets.query.all('tweets_coords')
-	"""
 
 @app.route('/')
 def page():
@@ -35,14 +19,10 @@ def page():
 def map():
 	#return render_template('base.html')
 	#return jsonify(**get_tweets())
-	tweets_dict = get_tweets()
-	json_file = open('download.json')
-	tweets_dict = json.load(json_file)
-	statuses = tweets_dict["statuses"]
-	html_list = []
 	# for status in statuses:
 	# html_list.append(get_tweet_html(status["id"]))
-	return render_template('base.html',html_list=html_list,geodata=extract_geodata(statuses), user_locs=user_locations(statuses))
+	all_tweets = dbsession.query(Tweet).all()
+	return render_template('base.html',all_tweets=all_tweets)
 
 @app.route('/refresh')
 def refresh():
@@ -50,7 +30,22 @@ def refresh():
 	statuses = tweets_dict["statuses"]
 	html_list = []
 	for status in statuses:
-		html_list.append(get_tweet_html(status["id"]))
+		print status
+		#html_list.append(get_tweet_html(status["id"])) #get_tweet_html(status["id"]
+		if(status['geo']):
+			tweet = Tweet(html="a", lat = status['geo']['coordinates'][0], lon=status['geo']['coordinates'][1], timestamp=datetime.now())
+		else:
+			tweet = Tweet(html="a", lat = "", lon="", timestamp=datetime.now())
+		dbsession.add(tweet)
+	
+	dbsession.commit()
+
+
+
+
+
+
+
 	return jsonify(**tweets_dict)
 
 def get_tweets():
@@ -121,3 +116,4 @@ def user_locations(statuses):
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=9393, debug=True)
+	app.config.from_object('config')
