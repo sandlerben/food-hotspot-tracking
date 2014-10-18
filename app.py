@@ -10,11 +10,11 @@ def page():
 
 def get_tweets():
 	oauth = OAuth()
-	twitter = oauth.remote_app('twitter',base_url='https://api.twitter.com/1.1/',request_token_url='https://api.twitter.com/oauth/request_token',access_token_url='https://api.twitter.com/oauth/access_token',authorize_url='https://api.twitter.com/oauth/authenticate',consumer_key='YvNbcy4KN9tzndKL0GvVAQMGA',consumer_secret='NNsRAUo9D7RgtDbg2ksZIwfJfUszOHXPiBoLLC87TTu61p0Ejx')
+	twitter = oauth.remote_app('twitter',base_url='https://api.twitter.com/1.1/',request_token_url='https://api.twitter.com/oauth/request_token',access_token_url='https://api.twitter.com/oauth/access_token',authorize_url='https://api.twitter.com/oauth/authenticate',consumer_key='MH1GPY8XpYgT9P5zVlWeDjHaQ',consumer_secret='cmq6yblCsQiXD9LVwKK7Xh5DcZTA3fwlNPykWMzVegDMOWMkAm')
 
 	session['twitter_token'] = (
-        '821931824-uOlM9gUpj14OcuMbY2QXU13Zntt2eNQgui5cquFo',
-        'f3S676wxZp3Z8xGjiS4ismqGBgtN1VcmNEWnrci1XOaMU'
+        '2835780022-2UlRmdzQLVbel8qr2RiQsDzPnSOhUBqW8JYmIoE',
+        't7mHe7nZqPO1y9dz5tLQRQFcXJZlB4h5MUfi2pdPdO0pg'
     )
 
 	@twitter.tokengetter
