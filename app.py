@@ -1,10 +1,31 @@
 from flask import Flask, render_template, jsonify, session, flash
 from flask_oauth import OAuth
-import json
+import json, models
 
 app = Flask(__name__)
 
 app.secret_key = 't\xea\x85B\xda&\xc3\xdf\x9c\x8f=\xf7\xfa\xa0\xe6\xd3\xf7\x899\xdf\xc0\xdb\x7f<'
+
+
+@app.route('/write')
+def write():
+	tweets_dict = {
+	'tweet' : { 'html': 'abcd', 'coordinates': {11.1111111, 1.1111111}},
+	'tweet' : { 'html': 'efgh', 'coordinates': {32.6027461, 2.2222222}}
+	}
+	tweets_html = models.AllTweets.query.all('html')
+	tweets_coords = models.AllTweets.query.all('coordinates')
+	u = models.AllTweets(tweets_dict, tweets_html, tweets_coords)
+	db.session.add(u)
+	db.session.commit()
+"""
+@app.route('/display')
+def display():
+	tweets_dict
+	models.AllTweets.query.all('tweets_dict')
+	models.AllTweets.query.all('tweets_html')
+	models.AllTweets.query.all('tweets_coords')
+	"""
 
 @app.route('/')
 def page():
@@ -22,6 +43,15 @@ def map():
 	# for status in statuses:
 	# html_list.append(get_tweet_html(status["id"]))
 	return render_template('base.html',html_list=html_list,geodata=extract_geodata(statuses), user_locs=user_locations(statuses))
+
+@app.route('/refresh')
+def refresh():
+	tweets_dict = get_tweets()
+	statuses = tweets_dict["statuses"]
+	html_list = []
+	for status in statuses:
+		html_list.append(get_tweet_html(status["id"]))
+	return jsonify(**tweets_dict)
 
 def get_tweets():
 	oauth = OAuth()
@@ -49,6 +79,7 @@ def get_tweets():
 		tweets = None
 		flash('whoops - couldn\'t get tweets :(')
 
+
 	return tweets
 
 def get_tweet_html(id):
@@ -67,7 +98,6 @@ def get_tweet_html(id):
 	resp = twitter.get('statuses/oembed.json', data = {
 		'id': id
 		})
-
 	if resp.status == 200:
 		tweet_html = resp.data
 	else:
