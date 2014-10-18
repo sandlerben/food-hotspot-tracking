@@ -32,11 +32,13 @@ def refresh():
 	for status in statuses:
 		#html_list.append(get_tweet_html(status["id"])) #get_tweet_html(status["id"]
 		id = status["id"]
-		if(status['geo']):
-			tweet = Tweet(id = id, html=get_tweet_html(id), lat = status['geo']['coordinates'][0], lon=status['geo']['coordinates'][1], locs = status['user']['location'], timestamp=datetime.now())
-		else:
-			tweet = Tweet(id = id, html=get_tweet_html(id), lat = "", lon="", locs = status['user']['location'], timestamp=datetime.now())
-		dbsession.add(tweet)
+		q = dbsession.query(Tweet).filter(Tweet.id == id)
+		if not (dbsession.query(q.exists())):
+			if(status['geo']):
+				tweet = Tweet(id = id, html=get_tweet_html(id), lat = status['geo']['coordinates'][0], lon=status['geo']['coordinates'][1], locs = status['user']['location'], timestamp=datetime.now())
+			else:
+				tweet = Tweet(id = id, html=get_tweet_html(id), lat = "", lon="", locs = status['user']['location'], timestamp=datetime.now())
+			dbsession.add(tweet)
 	
 	dbsession.commit()
 	return jsonify(**tweets_dict)
@@ -54,19 +56,31 @@ def get_tweets():
 	def get_twitter_token(token=None):
 		return session.get('twitter_token')
 
+	queries = ['mihogo','cassava','njaa','chakula ghali','hakuna chakula','enough food','expensive food','no food','mahindi','wali']
+	tweets = {}
+
 	resp = twitter.get('search/tweets.json', data = {
-		'q': 'hungry',
-		'geocode': '1,38,500km',
-		'result_type': 'mixed',
-		'count':'50',
-		})
+			'q': 'hungry',
+			'geocode': '1,38,500km',
+			'result_type': 'recent',
+			'count':'5',
+			})
 
-	if resp.status == 200:
-		tweets = resp.data
-	else:
-		tweets = None
-		flash('whoops - couldn\'t get tweets :(')
+	tweets = resp.data
 
+	for query in queries:
+		resp = twitter.get('search/tweets.json', data = {
+			'q': query,
+			'geocode': '1,38,500km',
+			'result_type': 'recent',
+			'count':'5',
+			})
+
+		if resp.status == 200:
+			tweets['statuses'].extend(resp.data['statuses'])
+		else:
+			tweets = None
+			flash('whoops - couldn\'t get tweets :(')
 
 	return tweets
 
@@ -84,7 +98,8 @@ def get_tweet_html(id):
 		return session.get('twitter_token')
 
 	resp = twitter.get('statuses/oembed.json', data = {
-		'id': id
+		'id': id,
+		'hide_media': 'true'
 		})
 	if resp.status == 200:
 		tweet_html = resp.data
@@ -93,19 +108,6 @@ def get_tweet_html(id):
 		flash('whoops - couldn\'t get tweets :(')
 
 	return tweet_html['html']
-
-def extract_geodata(statuses):
-	coordinate_list = []
-	for status in statuses:
-		if(status['geo'] is not None):
-			coordinate_list.append(status['geo']['coordinates'])
-	return coordinate_list
-
-def user_locations(statuses):
-	loc_list = []
-	for status in statuses:
-		loc_list.append(status['user']['location'])
-	return loc_list
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=9393, debug=True)
