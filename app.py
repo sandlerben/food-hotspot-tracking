@@ -32,11 +32,13 @@ def refresh():
 	for status in statuses:
 		#html_list.append(get_tweet_html(status["id"])) #get_tweet_html(status["id"]
 		id = status["id"]
-		if(status['geo']):
-			tweet = Tweet(id = id, html=get_tweet_html(id), lat = status['geo']['coordinates'][0], lon=status['geo']['coordinates'][1], locs = status['user']['location'], timestamp=datetime.now())
-		else:
-			tweet = Tweet(id = id, html=get_tweet_html(id), lat = "", lon="", locs = status['user']['location'], timestamp=datetime.now())
-		dbsession.add(tweet)
+		q = dbsession.query(Tweet).filter(Tweet.id == id)
+		if not (dbsession.query(q.exists())):
+			if(status['geo']):
+				tweet = Tweet(id = id, html=get_tweet_html(id), lat = status['geo']['coordinates'][0], lon=status['geo']['coordinates'][1], locs = status['user']['location'], timestamp=datetime.now())
+			else:
+				tweet = Tweet(id = id, html=get_tweet_html(id), lat = "", lon="", locs = status['user']['location'], timestamp=datetime.now())
+			dbsession.add(tweet)
 	
 	dbsession.commit()
 	return jsonify(**tweets_dict)
@@ -54,19 +56,31 @@ def get_tweets():
 	def get_twitter_token(token=None):
 		return session.get('twitter_token')
 
+	queries = ['mihogo','cassava','njaa','chakula ghali','hakuna chakula','enough food','expensive food','no food','mahindi','wali']
+	tweets = {}
+
 	resp = twitter.get('search/tweets.json', data = {
-		'q': 'hungry',
-		'geocode': '1,38,500km',
-		'result_type': 'mixed',
-		'count':'50',
-		})
+			'q': 'hungry',
+			'geocode': '1,38,500km',
+			'result_type': 'mixed',
+			'count':'5',
+			})
 
-	if resp.status == 200:
-		tweets = resp.data
-	else:
-		tweets = None
-		flash('whoops - couldn\'t get tweets :(')
+	tweets = resp.data
 
+	for query in queries:
+		resp = twitter.get('search/tweets.json', data = {
+			'q': query,
+			'geocode': '1,38,500km',
+			'result_type': 'mixed',
+			'count':'5',
+			})
+
+		if resp.status == 200:
+			tweets['statuses'].extend(resp.data['statuses'])
+		else:
+			tweets = None
+			flash('whoops - couldn\'t get tweets :(')
 
 	return tweets
 
