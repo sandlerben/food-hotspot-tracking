@@ -16,6 +16,13 @@ def page():
 		html_list.append(get_tweet_html(status["id"]))
 	return render_template('base.html',html_list=html_list,geodata=extract_geodata(statuses))
 
+def backround_function():
+	tweets_dict = get_tweets()
+	statuses = tweets_dict["statuses"]
+	html_list = []
+	for status in statuses:
+		html_list.append(get_tweet_html(status["id"]))
+
 def get_tweets():
 	oauth = OAuth()
 	twitter = oauth.remote_app('twitter',base_url='https://api.twitter.com/1.1/',request_token_url='https://api.twitter.com/oauth/request_token',access_token_url='https://api.twitter.com/oauth/access_token',authorize_url='https://api.twitter.com/oauth/authenticate',consumer_key='MH1GPY8XpYgT9P5zVlWeDjHaQ',consumer_secret='cmq6yblCsQiXD9LVwKK7Xh5DcZTA3fwlNPykWMzVegDMOWMkAm')
@@ -35,8 +42,6 @@ def get_tweets():
 		'result_type': 'mixed',
 		'count':'50',
 		})
-
-	print resp.data
 
 	if resp.status == 200:
 		tweets = resp.data
@@ -63,8 +68,6 @@ def get_tweet_html(id):
 	resp = twitter.get('statuses/oembed.json', data = {
 		'id': id
 		})
-	print "\n\n\n"
-	print resp.data
 	if resp.status == 200:
 		tweet_html = resp.data
 	else:
