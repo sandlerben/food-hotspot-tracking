@@ -31,7 +31,9 @@ def get_tweets():
 
 	resp = twitter.get('search/tweets.json', data = {
 		'q': 'hungry',
-		'geocode': '1,38,500km'
+		'geocode': '1,38,500km',
+		'result_type': 'mixed',
+		'count':'15',
 		})
 
 	if resp.status == 200:
