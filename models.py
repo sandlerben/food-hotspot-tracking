@@ -1,5 +1,4 @@
-#from app import db
-import db
+from app import db
 
 class Tweet(db.Model):
     tweets_dict = db.Column(db.Blob(), primary_key=True)
