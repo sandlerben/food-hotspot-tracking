@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify,session
+from flask import Flask, render_template, jsonify, session
 from flask_oauth import OAuth
 
 app = Flask(__name__)
@@ -19,11 +19,8 @@ def get_tweets():
 		't7mHe7nZqPO1y9dz5tLQRQFcXJZlB4h5MUfi2pdPdO0pg'
 	)
 
-	print "1."
-
 	@twitter.tokengetter
 	def get_twitter_token(token=None):
-		print "2."
 		return session.get('twitter_token')
 
 	resp = twitter.get('search/tweets.json', data = {
@@ -31,19 +28,13 @@ def get_tweets():
 		'geocode': '1,38,500km'
 		})
 
-	print "3."
-
 	if resp.status == 200:
 		tweets = resp.data
 	else:
 		tweets = None
 		flash('whoops - couldn\'t get tweets :(')
 
-	print "4."
-
 	return tweets
-
-
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=9393, debug=True)
