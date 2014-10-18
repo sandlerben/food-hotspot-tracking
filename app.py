@@ -16,7 +16,7 @@ def page():
 	return render_template('splash.html')
 
 @app.route('/app')
-def map():
+def application():
 	#return render_template('base.html')
 	#return jsonify(**get_tweets())
 	# for status in statuses:
@@ -30,22 +30,15 @@ def refresh():
 	statuses = tweets_dict["statuses"]
 	html_list = []
 	for status in statuses:
-		print status
 		#html_list.append(get_tweet_html(status["id"])) #get_tweet_html(status["id"]
+		id = status["id"]
 		if(status['geo']):
-			tweet = Tweet(html="a", lat = status['geo']['coordinates'][0], lon=status['geo']['coordinates'][1], timestamp=datetime.now())
+			tweet = Tweet(id = id, html=get_tweet_html(id), lat = status['geo']['coordinates'][0], lon=status['geo']['coordinates'][1], locs = status['user']['location'], timestamp=datetime.now())
 		else:
-			tweet = Tweet(html="a", lat = "", lon="", timestamp=datetime.now())
+			tweet = Tweet(id = id, html=get_tweet_html(id), lat = "", lon="", locs = status['user']['location'], timestamp=datetime.now())
 		dbsession.add(tweet)
 	
 	dbsession.commit()
-
-
-
-
-
-
-
 	return jsonify(**tweets_dict)
 
 def get_tweets():

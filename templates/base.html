@@ -9,13 +9,7 @@
 	<script>
 		var map, pointarray, heatmap, tweetGeoData;
 
-		 tweetGeoData = [
-			{% for i in geodata %}
-                new google.maps.LatLng({{ i[0] }}, {{ i[1] }}),
-			{% endfor %}
-        ];
-
-		var pointArray = new google.maps.MVCArray(tweetGeoData);
+		 
 
 		
 		function initialize() {
@@ -31,17 +25,20 @@
 
 
 			service = new google.maps.places.PlacesService(map);
-						
-			{% for loc in user_locs %}
-			
-			var request = {
-				query: '{{ loc }}',
-			};
-     					 
-			service.textSearch(request, callback);
-			 
-			{% endfor %}
 
+            tweetGeoData = [];
+            {% for tweet in all_tweets %}
+                {% if tweet.lat %}
+                    tweetGeoData.push(new google.maps.LatLng({{ tweet.lat }}, {{ tweet.lon }}));
+                {% elif tweet.loc %}
+                    var request = {
+                    query: '{{ tweet.loc }}',
+                    };     
+                    service.textSearch(request, callback);
+                {% endif %}
+            {% endfor %}    
+
+        var pointArray = new google.maps.MVCArray(tweetGeoData);
 
 			heatmap = new google.maps.visualization.HeatmapLayer({
 				data: pointArray
@@ -56,7 +53,7 @@
 
 				if (typeof(place) !== 'undefined') {
 					var loc = place.geometry.location;
-					console.log('pushing ' + loc.toString() + ' to geoData');
+					// console.log('pushing ' + loc.toString() + ' to geoData');
 					pointArray.push(loc); 
 				}	
 				
@@ -74,7 +71,11 @@
 	</div>
 	<main>
 		<h1>Recent tweets in the area</h1>
-		{% include 'tweets.html' %}
+		<ul id="container">
+            {% for tweet in all_tweets %}
+            <li class="item">{{ tweet.html|safe }}</li>
+            {% endfor %}
+        </ul>
 	</main>
 	<footer>
 		<div class="wrapper">
