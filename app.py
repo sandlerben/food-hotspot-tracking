@@ -3,29 +3,35 @@ from flask_oauth import OAuth
 
 app = Flask(__name__)
 
+app.secret_key = 't\xea\x85B\xda&\xc3\xdf\x9c\x8f=\xf7\xfa\xa0\xe6\xd3\xf7\x899\xdf\xc0\xdb\x7f<'
+
 @app.route('/')
 def page():
 	#return render_template('base.html')
-	return get_tweets()
+	return jsonify(**get_tweets())
 
 def get_tweets():
 	oauth = OAuth()
 	twitter = oauth.remote_app('twitter',base_url='https://api.twitter.com/1.1/',request_token_url='https://api.twitter.com/oauth/request_token',access_token_url='https://api.twitter.com/oauth/access_token',authorize_url='https://api.twitter.com/oauth/authenticate',consumer_key='MH1GPY8XpYgT9P5zVlWeDjHaQ',consumer_secret='cmq6yblCsQiXD9LVwKK7Xh5DcZTA3fwlNPykWMzVegDMOWMkAm')
 
-	# session['twitter_token'] = (
- #        '2835780022-2UlRmdzQLVbel8qr2RiQsDzPnSOhUBqW8JYmIoE',
- #        't7mHe7nZqPO1y9dz5tLQRQFcXJZlB4h5MUfi2pdPdO0pg'
- #    )
+	session['twitter_token'] = (
+		'2835780022-2UlRmdzQLVbel8qr2RiQsDzPnSOhUBqW8JYmIoE',
+		't7mHe7nZqPO1y9dz5tLQRQFcXJZlB4h5MUfi2pdPdO0pg'
+	)
+
+	print "1."
 
 	@twitter.tokengetter
 	def get_twitter_token(token=None):
-		return None
-	    #return session.get('twitter_token')
+		print "2."
+		return session.get('twitter_token')
 
 	resp = twitter.get('search/tweets.json', data = {
 		'q': 'hungry',
 		'geocode': '1,38,500km'
 		})
+
+	print "3."
 
 	if resp.status == 200:
 		tweets = resp.data
@@ -33,6 +39,7 @@ def get_tweets():
 		tweets = None
 		flash('whoops - couldn\'t get tweets :(')
 
+	print "4."
 
 	return tweets
 
