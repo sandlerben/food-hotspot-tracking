@@ -10,8 +10,8 @@
         var map, pointarray, heatmap;
 
         var tweetGeoData = [
-            {% for i in data %}
-                new google.maps.LatLng({{ i[0] }}, {{ i[1] }}),
+            {% for i in geodata %}
+                new google.maps.LatLng( {{ i[0] }}, {{ i[1] }} ),
             {% endfor %}
         ];
 
