@@ -13,9 +13,9 @@ def get_tweets():
 	twitter = oauth.remote_app('twitter',base_url='https://api.twitter.com/1.1/',request_token_url='https://api.twitter.com/oauth/request_token',access_token_url='https://api.twitter.com/oauth/access_token',authorize_url='https://api.twitter.com/oauth/authenticate',consumer_key='YvNbcy4KN9tzndKL0GvVAQMGA',consumer_secret='NNsRAUo9D7RgtDbg2ksZIwfJfUszOHXPiBoLLC87TTu61p0Ejx')
 
 	session['twitter_token'] = (
-        resp['oauth_token'],
-        resp['oauth_token_secret']
-    	)
+        '821931824-uOlM9gUpj14OcuMbY2QXU13Zntt2eNQgui5cquFo',
+        'f3S676wxZp3Z8xGjiS4ismqGBgtN1VcmNEWnrci1XOaMU'
+    )
 
 	@twitter.tokengetter
 	def get_twitter_token(token=None):
