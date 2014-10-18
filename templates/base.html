@@ -45,9 +45,9 @@
     </header>
     <div id="map-canvas"></div>
     <main>
-        <h1>This is a the World Food Programme food hotspot tracking project.</h1>
-
-       
+        {% for id in html_list %}
+        {{ id|safe }}
+        {% endfor %}
     </main>
     <footer>
         <div class="wrapper">
