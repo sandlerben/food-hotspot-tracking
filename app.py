@@ -12,14 +12,15 @@ def get_tweets():
 	oauth = OAuth()
 	twitter = oauth.remote_app('twitter',base_url='https://api.twitter.com/1.1/',request_token_url='https://api.twitter.com/oauth/request_token',access_token_url='https://api.twitter.com/oauth/access_token',authorize_url='https://api.twitter.com/oauth/authenticate',consumer_key='MH1GPY8XpYgT9P5zVlWeDjHaQ',consumer_secret='cmq6yblCsQiXD9LVwKK7Xh5DcZTA3fwlNPykWMzVegDMOWMkAm')
 
-	session['twitter_token'] = (
-        '2835780022-2UlRmdzQLVbel8qr2RiQsDzPnSOhUBqW8JYmIoE',
-        't7mHe7nZqPO1y9dz5tLQRQFcXJZlB4h5MUfi2pdPdO0pg'
-    )
+	# session['twitter_token'] = (
+ #        '2835780022-2UlRmdzQLVbel8qr2RiQsDzPnSOhUBqW8JYmIoE',
+ #        't7mHe7nZqPO1y9dz5tLQRQFcXJZlB4h5MUfi2pdPdO0pg'
+ #    )
 
 	@twitter.tokengetter
 	def get_twitter_token(token=None):
-	    return session.get('twitter_token')
+		return None
+	    #return session.get('twitter_token')
 
 	resp = twitter.get('search/tweets.json', data = {
 		'q': 'hungry',
