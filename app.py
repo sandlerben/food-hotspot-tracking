@@ -1,10 +1,5 @@
 from flask import Flask, render_template, jsonify, session, flash
 from flask_oauth import OAuth
-from rq import Queue
-from worker import conn
-
-q = Queue(connection=conn)
-result = q.enqueue(backround_function)
 
 app = Flask(__name__)
 
@@ -21,13 +16,9 @@ def page():
 		html_list.append(get_tweet_html(status["id"]))
 	return render_template('base.html',html_list=html_list,geodata=extract_geodata(statuses))
 
-#This does everything we need it to BUT write to the db
-def backround_function():
-	tweets_dict = get_tweets()
-	statuses = tweets_dict["statuses"]
-	html_list = []
-	for status in statuses:
-		html_list.append(get_tweet_html(status["id"]))
+@app.route('/refresh')
+def refresh():
+	return "Eventually we will refresh tweets here."
 
 def get_tweets():
 	oauth = OAuth()
