@@ -7,8 +7,8 @@ app.secret_key = 't\xea\x85B\xda&\xc3\xdf\x9c\x8f=\xf7\xfa\xa0\xe6\xd3\xf7\x899\
 
 @app.route('/')
 def page():
-	#return render_template('base.html')
-	return jsonify(**get_tweets())
+	return render_template('base.html')
+	# return jsonify(**get_tweets())
 
 def get_tweets():
 	oauth = OAuth()
