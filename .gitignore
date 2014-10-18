@@ -2,7 +2,7 @@
 .DS_Store
 
 # Sass
-_sass/
+css/
 .sass-cache
 *.css.map
 
