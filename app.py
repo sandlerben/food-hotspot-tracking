@@ -1,5 +1,6 @@
-from flask import Flask, render_template, jsonify, session
+from flask import Flask, render_template, jsonify, session, flash
 from flask_oauth import OAuth
+import json
 
 app = Flask(__name__)
 
@@ -7,14 +8,20 @@ app.secret_key = 't\xea\x85B\xda&\xc3\xdf\x9c\x8f=\xf7\xfa\xa0\xe6\xd3\xf7\x899\
 
 @app.route('/')
 def page():
+	return render_template('splash.html')
+
+@app.route('/app')
+def map():
 	#return render_template('base.html')
 	#return jsonify(**get_tweets())
 	tweets_dict = get_tweets()
+	json_file = open('download.json')
+	tweets_dict = json.load(json_file)
 	statuses = tweets_dict["statuses"]
 	html_list = []
-	for status in statuses:
-		html_list.append(get_tweet_html(status["id"]))
-	return render_template('base.html',html_list=html_list,geodata=extract_geodata(statuses))
+	# for status in statuses:
+	# html_list.append(get_tweet_html(status["id"]))
+	return render_template('base.html',html_list=html_list,geodata=extract_geodata(statuses), user_locs=user_locations(statuses))
 
 def get_tweets():
 	oauth = OAuth()
@@ -75,6 +82,12 @@ def extract_geodata(statuses):
 		if(status['geo'] is not None):
 			coordinate_list.append(status['geo']['coordinates'])
 	return coordinate_list
+
+def user_locations(statuses):
+	loc_list = []
+	for status in statuses:
+		loc_list.append(status['user']['location'])
+	return loc_list
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=9393, debug=True)
