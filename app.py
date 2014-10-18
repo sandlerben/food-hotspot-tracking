@@ -62,7 +62,7 @@ def get_tweets():
 	resp = twitter.get('search/tweets.json', data = {
 			'q': 'hungry',
 			'geocode': '1,38,500km',
-			'result_type': 'mixed',
+			'result_type': 'recent',
 			'count':'5',
 			})
 
@@ -72,7 +72,7 @@ def get_tweets():
 		resp = twitter.get('search/tweets.json', data = {
 			'q': query,
 			'geocode': '1,38,500km',
-			'result_type': 'mixed',
+			'result_type': 'recent',
 			'count':'5',
 			})
 
@@ -98,7 +98,8 @@ def get_tweet_html(id):
 		return session.get('twitter_token')
 
 	resp = twitter.get('statuses/oembed.json', data = {
-		'id': id
+		'id': id,
+		'hide_media': 'true'
 		})
 	if resp.status == 200:
 		tweet_html = resp.data
@@ -107,19 +108,6 @@ def get_tweet_html(id):
 		flash('whoops - couldn\'t get tweets :(')
 
 	return tweet_html['html']
-
-def extract_geodata(statuses):
-	coordinate_list = []
-	for status in statuses:
-		if(status['geo'] is not None):
-			coordinate_list.append(status['geo']['coordinates'])
-	return coordinate_list
-
-def user_locations(statuses):
-	loc_list = []
-	for status in statuses:
-		loc_list.append(status['user']['location'])
-	return loc_list
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=9393, debug=True)
