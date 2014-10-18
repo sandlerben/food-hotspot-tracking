@@ -14,7 +14,7 @@ def page():
 	html_list = []
 	for status in statuses:
 		html_list.append(get_tweet_html(status["id"]))
-	return render_template('base.html',html_list=html_list)
+	return render_template('base.html',html_list=html_list,geodata=extract_geodata(statuses))
 
 def get_tweets():
 	oauth = OAuth()
@@ -69,6 +69,12 @@ def get_tweet_html(id):
 
 	return tweet_html['html']
 
+def extract_geodata(statuses):
+	coordinate_list = []
+	for status in statuses:
+		if(status['geo'] is not None):
+			coordinate_list.append(status['geo']['coordinates'])
+	return coordinate_list
 
 if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=9393, debug=True)

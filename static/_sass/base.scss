@@ -12,8 +12,9 @@ body {}
 }
 
 #map-canvas {
-    height: 100%;
-    margin: 0px;
+    height: 600px;
+    max-width: 960px;
+    margin: 0 auto;
     padding: 0px;
 }
 
