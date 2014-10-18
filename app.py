@@ -18,7 +18,12 @@ def page():
 
 @app.route('/refresh')
 def refresh():
-	return "Eventually we will refresh tweets here."
+	tweets_dict = get_tweets()
+	statuses = tweets_dict["statuses"]
+	html_list = []
+	for status in statuses:
+		html_list.append(get_tweet_html(status["id"]))
+	return jsonify(**tweets_dict)
 
 def get_tweets():
 	oauth = OAuth()
