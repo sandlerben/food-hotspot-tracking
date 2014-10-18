@@ -10,3 +10,7 @@ oauth2==1.5.211
 redis==2.10.3
 rq==0.4.6
 wsgiref==0.1.2
+sqlalchemy==0.7.9
+flask-sqlalchemy==0.16
+sqlalchemy-migrate==0.7.2
+flask-whooshalchemy==0.55a
