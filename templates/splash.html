@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="static/css/main.css">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+	<style type="text/css">
+		html {
+			height: 100%;
+			background: linear-gradient(rgba(21, 55, 75, 0.6), rgba(21, 55, 75, 0.6)), url('static/img/wfp.jpg');
+			/*			background: rgba(0,255,255, 0.5);*/
+			height: 100%;
+			display: block;
+		}
+		div#buttons {
+			position: absolute;
+			width: 100%;
+			top: 50%;
+			transform: translateY(-50%);
+			display: block;
+			text-align: center;
+		}
+		.button {
+			margin: 5px;
+			display: inline-block;
+			color: white;
+			font-weight: bold;
+			background-color: #009dff;
+			padding: 10px;
+			border-radius: 5px;
+			text-decoration: none;
+		}
+		aside {
+			color: white;
+			position: absolute;
+			bottom: 2px;
+			right: 2px;
+			font-size: 80%;
+		}
+	</style>
+
+	<script src="static/js/jquery.particleground.min.js"></script>
+	<script>
+		function pg() {
+			var color = 'rgba(255,255,255,0.2)'
+			$('html').particleground({
+				dotColor: color,
+				lineColor: color,
+				parallaxMultiplier: 20,
+				maxSpeedY: 0.4,
+				maxSpeedX: 0.4,
+			});
+		}
+
+		$(pg);
+	</script>
+</head>
+
+<body>
+	{% include 'header.html' %}
+	<div id="pg">
+		<div id="buttons">
+			<a href="/app" class="button">Launch app</a>
+			<a href="http://wfp.org" class="button">WFP.org</a>
+		</div>
+	</div>
+	<aside>Built at Hack the Change 2014 by Max McCarthy, Yoni Nachmany, and Ben Sandler</aside>
+</body>
+
+</html>
+
+
