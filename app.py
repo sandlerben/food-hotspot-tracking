@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, session
+from flask import Flask, render_template, jsonify, session, flash
 from flask_oauth import OAuth
 from flask import flash
 import models
@@ -40,6 +40,15 @@ def page():
 		html_list.append(get_tweet_html(status["id"]))
 	return render_template('base.html',html_list=html_list,geodata=extract_geodata(statuses))
 
+@app.route('/refresh')
+def refresh():
+	tweets_dict = get_tweets()
+	statuses = tweets_dict["statuses"]
+	html_list = []
+	for status in statuses:
+		html_list.append(get_tweet_html(status["id"]))
+	return jsonify(**tweets_dict)
+
 def get_tweets():
 	oauth = OAuth()
 	twitter = oauth.remote_app('twitter',base_url='https://api.twitter.com/1.1/',request_token_url='https://api.twitter.com/oauth/request_token',access_token_url='https://api.twitter.com/oauth/access_token',authorize_url='https://api.twitter.com/oauth/authenticate',consumer_key='MH1GPY8XpYgT9P5zVlWeDjHaQ',consumer_secret='cmq6yblCsQiXD9LVwKK7Xh5DcZTA3fwlNPykWMzVegDMOWMkAm')
@@ -66,6 +75,7 @@ def get_tweets():
 		tweets = None
 		flash('whoops - couldn\'t get tweets :(')
 
+
 	return tweets
 
 def get_tweet_html(id):
@@ -84,7 +94,6 @@ def get_tweet_html(id):
 	resp = twitter.get('statuses/oembed.json', data = {
 		'id': id
 		})
-
 	if resp.status == 200:
 		tweet_html = resp.data
 	else:
