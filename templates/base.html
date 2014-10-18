@@ -4,12 +4,32 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="static/css/main.css">
+    <style>
+        html,
+        body,
+        #map-canvas {
+            height: 600px;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0px
+        }
+        #panel {
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            margin-left: -180px;
+            z-index: 5;
+            background-color: #fff;
+            padding: 5px;
+            border: 1px solid #999;
+        }
+    </style>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization"></script>
     <script>
-// Adding 500 Data Points
-var map, pointarray, heatmap;
+        // Adding 500 Data Points
+        var map, pointarray, heatmap;
 
-var taxiData = [
+        var taxiData = [
   new google.maps.LatLng(37.782551, -122.445368),
   new google.maps.LatLng(37.782745, -122.444586),
   new google.maps.LatLng(37.782842, -122.443688),
@@ -512,38 +532,40 @@ var taxiData = [
   new google.maps.LatLng(37.751266, -122.403355)
 ];
 
-function initialize() {
-  var mapOptions = {
-    zoom: 13,
-    center: new google.maps.LatLng(37.774546, -122.433523),
-    mapTypeId: google.maps.MapTypeId.SATELLITE
-  };
+        function initialize() {
+            var mapOptions = {
+                zoom: 6,
+                center: new google.maps.LatLng(1, 38),
+                mapTypeId: google.maps.MapTypeId.MAP
+            };
 
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
+            map = new google.maps.Map(document.getElementById('map-canvas'),
+                mapOptions);
 
-  var pointArray = new google.maps.MVCArray(taxiData);
+            var pointArray = new google.maps.MVCArray(taxiData);
 
-  heatmap = new google.maps.visualization.HeatmapLayer({
-    data: pointArray
-  });
+            heatmap = new google.maps.visualization.HeatmapLayer({
+                data: pointArray
+            });
 
-  heatmap.setMap(map);
-}
+            heatmap.setMap(map);
+        }
 
-google.maps.event.addDomListener(window, 'load', initialize);
-
-</script>
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
 </head>
 
 <body>
     <header>
         <div class="wrapper">
-            <h1>Food Hotspot Tracking</h1>
+            <h1>Food Hotspot Tracking that should work</h1>
         </div>
     </header>
+    <div id="map-canvas"></div>
     <main>
         <h1>This is a the World Food Programme food hotspot tracking project.</h1>
+
+       
     </main>
     <footer>
         <div class="wrapper">
