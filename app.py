@@ -33,7 +33,7 @@ def get_tweets():
 		'q': 'hungry',
 		'geocode': '1,38,500km',
 		'result_type': 'mixed',
-		'count':'15',
+		'count':'50',
 		})
 
 	if resp.status == 200:
