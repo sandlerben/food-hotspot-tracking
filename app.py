@@ -5,6 +5,26 @@ app = Flask(__name__)
 
 app.secret_key = 't\xea\x85B\xda&\xc3\xdf\x9c\x8f=\xf7\xfa\xa0\xe6\xd3\xf7\x899\xdf\xc0\xdb\x7f<'
 
+@app.route('/write')
+def write():
+	tweets_dict = {
+	'tweet' : { 'html': 'abcd', 'coords': 11.1111111, 1.1111111}
+	'tweet' : { 'html': 'efgh', 'coords': 32.6027461, 2.2222222}
+	}
+	tweets_html = models.AllTweets.query.all('html')
+	tweets_coords = models.AllTweets.query.all('coords')
+	u = models.AllTweets(tweets_dict, tweets_html, tweets_coords)
+	db.session.add(u)
+	db.session.commit()
+
+@app.route('/display')
+def display():
+	tweets_dict
+	models.AllTweets.query.all('tweets_dict')
+	models.AllTweets.query.all('tweets_html')
+	models.AllTweets.query.all('tweets_coords')
+
+
 @app.route('/')
 def page():
 	#return render_template('base.html')
