@@ -68,7 +68,7 @@
 	</div>
 	<main>
 		<h1>Recent tweets in the area</h1>
-		<h6><center>Last scanned twitter at {{ most_recent_tweets[-1].timestamp.strftime("%H:%M %p on %Y-%m-%d.") }}</center></h6>
+		<h6><center>Last scanned twitter at {{ most_recent_tweets[0].timestamp.strftime("%H:%M %p on %Y-%m-%d.") }}</center></h6>
 		<ul id="container">
             {% for tweet in most_recent_tweets %}
             <li class="item">{{ tweet.html|safe }}</li>
