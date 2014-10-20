@@ -22,7 +22,8 @@ def application():
 	# for status in statuses:
 	# html_list.append(get_tweet_html(status["id"]))
 	all_tweets = dbsession.query(Tweet).all()
-	return render_template('base.html',all_tweets=all_tweets)
+	most_recent_tweets = dbsession.query(Tweet).order_by(Tweet.timestamp.desc()).limit(50)
+	return render_template('base.html',all_tweets=all_tweets,most_recent_tweets=most_recent_tweets)
 
 @app.route('/refresh')
 def refresh():
@@ -31,14 +32,12 @@ def refresh():
 	html_list = []
 	for status in statuses:
 		#html_list.append(get_tweet_html(status["id"])) #get_tweet_html(status["id"]
-		id = status["id"]
-		q = dbsession.query(Tweet).filter(Tweet.id == id)
-		if not (dbsession.query(q.exists())):
-			if(status['geo']):
-				tweet = Tweet(id = id, html=get_tweet_html(id), lat = status['geo']['coordinates'][0], lon=status['geo']['coordinates'][1], locs = status['user']['location'], timestamp=datetime.now())
-			else:
-				tweet = Tweet(id = id, html=get_tweet_html(id), lat = "", lon="", locs = status['user']['location'], timestamp=datetime.now())
-			dbsession.add(tweet)
+		id_str = status["id"]
+		if(status['geo']):
+			tweet = Tweet(id = id_str, html=get_tweet_html(id_str), lat = status['geo']['coordinates'][0], lon=status['geo']['coordinates'][1], locs = status['user']['location'], timestamp=datetime.now())
+		else:
+			tweet = Tweet(id = id_str, html=get_tweet_html(id_str), lat = "", lon="", locs = status['user']['location'], timestamp=datetime.now())
+		dbsession.merge(tweet)
 	
 	dbsession.commit()
 	return jsonify(**tweets_dict)

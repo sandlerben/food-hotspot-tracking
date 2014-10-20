@@ -5,7 +5,7 @@ import sys
 from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-from sqlalchemy import create_engine, Date 
+from sqlalchemy import create_engine, DateTime 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -18,7 +18,7 @@ class Tweet(Base):
     lat = Column(String)
     html = Column(String)
     locs = Column(String)
-    timestamp = Column(Date)
+    timestamp = Column(DateTime)
 
     def coord (self):
         return (self.lon, self.lat)
