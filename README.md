@@ -1,4 +1,4 @@
-food-hotspot-tracking
+Food Hotstop Tracking
 =====================
 
 Displays a heatmap of food-insecure areas by parsing Twitter data. The application scans Twitter for tweet’s with contents related to hunger and food scarcity in Kenya. The locations of relevant tweets are plotted on a heat map, generating a visualization of which areas have food insecurity.
