@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, session, flash
 from flask_oauth import OAuth
+import os
 import json, models
 from datetime import datetime
 from models import Tweet
