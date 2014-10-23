@@ -9,7 +9,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 db = SQLAlchemy(app)
 
-app.secret_key = 't\dj8\x85C\xda&\xc3\8dn\x9c\x8f=\xf7\xfa\jf9\xe6\xd3\8en\x899\jfs\xc0\fj9\x7f<'
+app.secret_key = 't\dj8\x85C\xdb&\xc3\8dn\x9c\x8f=\xf7\xfa\jf9\xe6\xd3\8en\x899\jfs\xc0\fj9\x7f<'
 
 @app.route('/')
 def page():
