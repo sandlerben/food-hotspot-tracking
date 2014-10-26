@@ -2,67 +2,69 @@
 <html>
 
 <head>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="static/css/main.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization,places"></script>
-
+	<script type="text/javascript" src="static/js/masonry.min.js"></script>
+	
 	<script>
 		var map, pointarray, heatmap, tweetGeoData;
-		
-		function initialize() {
 
+		// Set up google map
+		function initialize() {
 			var mapOptions = {
 				zoom: 6,
 				center: new google.maps.LatLng(1, 38), // middle of Kenya
 				mapTypeId: google.maps.MapTypeId.MAP
 			};
-			
+
 			map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
 			service = new google.maps.places.PlacesService(map);
-
-            var pointArray = new google.maps.MVCArray();
-
-            {% for tweet in all_tweets %}
-                {% if tweet.lat %}
-                    pointArray.push(new google.maps.LatLng({{ tweet.lat }}, {{ tweet.lon }}));
-                {% elif tweet.loc %}
-                    var request = {
-                        query: '{{ tweet.loc }}',
-                    };
-                    service.textSearch(request, callback);
-                {% endif %}
-            {% endfor %}    
-
-
+			var pointArray = new google.maps.MVCArray(); 
+			
+			// Add tweets to array so we can render them
+			{% for tweet in all_tweets %} 
+				{% if tweet.lat %} // tweet has precise geolocation
+					pointArray.push(new google.maps.LatLng({{tweet.lat}}, {{tweet.lon}})); 
+				{% elif tweet.loc %} // tweet has general area --> convert to precise geoloc
+					var request = {
+						query: '{{ tweet.loc }}',
+					};
+					service.textSearch(request, callback); 
+				{% endif %} 
+			{% endfor %}
+			
 			heatmap = new google.maps.visualization.HeatmapLayer({
 				data: pointArray
 			});
-
 			heatmap.setMap(map);
 		}
 
+		// Reuturn from google maps query
 		function callback(results, status) {
-            console.log("What");
 			if (status == google.maps.places.PlacesServiceStatus.OK) {
 				var place = results[0];
-
-				if (typeof(place) !== 'undefined') {
+				if (typeof (place) !== 'undefined') {
 					var loc = place.geometry.location;
 					// console.log('pushing ' + loc.toString() + ' to geoData');
-					pointArray.push(loc); 
-				}	
+					pointArray.push(loc);
+				}
 			}
 		}
 
 		google.maps.event.addDomListener(window, 'load', initialize);
-
 	</script>
-    <script type="text/javascript" src="static/js/masonry.min.js"></script>
+
+
 </head>
 
 <body>
-	{% include 'header.html' %}
+	<header>
+		<div class="wrapper">
+			<h1>Food Hotspot Tracking</h1>
+		</div>
+	</header>
 	<div id="map-wrapper">
 		<div id="map-canvas"></div>
 	</div>
@@ -70,33 +72,34 @@
 		<h1>Recent tweets in the area</h1>
 		<h6><center>Last scanned twitter at {{ most_recent_tweets[0].timestamp.strftime("%H:%M %p on %Y-%m-%d.") }}</center></h6>
 		<ul id="container">
-            {% for tweet in most_recent_tweets %}
-            <li class="item">{{ tweet.html|safe }}</li>
-            {% endfor %}
-        </ul>
+			{% for tweet in most_recent_tweets %}
+			<li class="item">{{ tweet.html|safe }}</li>
+			{% endfor %}
+		</ul>
 	</main>
 	<footer>
 		<div class="wrapper">
-			Built at Hack the Change 2014 by Max McCarthy, Yoni Nachmany, and Ben Sandler.
+			Built at Hack the Change 2014 by Max McCarthy, Yoni Nachmany, and Ben Sandler, and Nancy Wong.
 		</div>
 	</footer>
 
-    
+
+	<script>
+		// Tweet layout script
+		var container = document.querySelector('#container');
+		var msnry = new Masonry(container, {
+			columnWidth: 510,
+			itemSelector: '.item',
+			gutter: 10,
+			isFitWidth: true,
+			isInitLayout: false,
+		});
+		
+		// Fix for JS bug -- not optimal, but need to execute msnry.layout()
+		// after all the twitter wiget JS finishes
+		interval = window.setInterval(function(){msnry.layout()}, 500);
+
+	</script>
 </body>
-
-<script type="text/javascript">
-    var container = document.querySelector('#container');
-    var msnry = new Masonry( container, {
-        columnWidth: 505,
-        itemSelector: '.item',
-        gutter: 10,
-        isFitWidth: true,
-    });
-
-    msnry.bindResize();
-
-    msnry.layout();
-
-</script>
 
 </html>

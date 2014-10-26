@@ -19,14 +19,11 @@ def page():
 
 @app.route('/app')
 def application():
-	#return render_template('base.html')
-	#return jsonify(**get_tweets())
-	# for status in statuses:
-	# html_list.append(get_tweet_html(status["id"]))
 	all_tweets = dbsession.query(Tweet).all()
 	most_recent_tweets = dbsession.query(Tweet).order_by(Tweet.timestamp.desc()).limit(50)
 	return render_template('base.html',all_tweets=all_tweets,most_recent_tweets=most_recent_tweets)
 
+# Refreshes contents of database
 @app.route('/refresh')
 def refresh():
 	tweets_dict = get_tweets()
@@ -44,6 +41,7 @@ def refresh():
 	dbsession.commit()
 	return jsonify(**tweets_dict)
 
+# Load tweets from twitter
 def get_tweets():
 	oauth = OAuth()
 	twitter = oauth.remote_app('twitter',base_url='https://api.twitter.com/1.1/',request_token_url='https://api.twitter.com/oauth/request_token',access_token_url='https://api.twitter.com/oauth/access_token',authorize_url='https://api.twitter.com/oauth/authenticate',consumer_key='MH1GPY8XpYgT9P5zVlWeDjHaQ',consumer_secret='cmq6yblCsQiXD9LVwKK7Xh5DcZTA3fwlNPykWMzVegDMOWMkAm')
@@ -57,6 +55,7 @@ def get_tweets():
 	def get_twitter_token(token=None):
 		return session.get('twitter_token')
 
+	# Search for tweets containing these words
 	queries = ['mihogo','cassava','njaa','chakula ghali','hakuna chakula','enough food','expensive food','no food','mahindi','wali']
 	tweets = {}
 
@@ -85,6 +84,7 @@ def get_tweets():
 
 	return tweets
 
+# Get embed html for a tweet by ID
 def get_tweet_html(id):
 	oauth = OAuth()
 	twitter = oauth.remote_app('twitter',base_url='https://api.twitter.com/1.1/',request_token_url='https://api.twitter.com/oauth/request_token',access_token_url='https://api.twitter.com/oauth/access_token',authorize_url='https://api.twitter.com/oauth/authenticate',consumer_key='MH1GPY8XpYgT9P5zVlWeDjHaQ',consumer_secret='cmq6yblCsQiXD9LVwKK7Xh5DcZTA3fwlNPykWMzVegDMOWMkAm')
