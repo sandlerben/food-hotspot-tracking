@@ -1,16 +1,13 @@
 from flask import Flask, render_template, jsonify, session, flash
+from app import app, db
 from flask_oauth import OAuth
-import os
-import json, models
+# import os
+# import json, models
 from datetime import datetime
+from pytz import timezone
 from models import Tweet
-from models import dbsession
-from flask.ext.sqlalchemy import SQLAlchemy
-
-app = Flask(__name__)
-db = SQLAlchemy(app)
-
-app.secret_key = 't\dj8\x85C\xdb&\xc3\8dn\x9c\x8f=\xf7\xfa\jf9\xe6\xd3\8en\x899\jfs\xc0\fj9\x7f<'
+# from models import dbsession
+# from flask.ext.sqlalchemy import SQLAlchemy
 
 @app.route('/')
 def page():
@@ -18,8 +15,8 @@ def page():
 
 @app.route('/app')
 def application():
-	all_tweets = dbsession.query(Tweet).all()
-	most_recent_tweets = dbsession.query(Tweet).order_by(Tweet.timestamp.desc()).limit(50)
+	all_tweets = Tweet.query.all()
+	most_recent_tweets = Tweet.query.order_by(Tweet.timestamp.desc()).limit(50)
 	return render_template('base.html',all_tweets=all_tweets,most_recent_tweets=most_recent_tweets)
 
 # Refreshes contents of database
@@ -28,16 +25,17 @@ def refresh():
 	tweets_dict = get_tweets()
 	statuses = tweets_dict["statuses"]
 	html_list = []
+	eastern = timezone('US/Eastern')
 	for status in statuses:
 		#html_list.append(get_tweet_html(status["id"])) #get_tweet_html(status["id"]
 		id_str = status["id"]
 		if(status['geo']):
-			tweet = Tweet(id = id_str, html=get_tweet_html(id_str), lat = status['geo']['coordinates'][0], lon=status['geo']['coordinates'][1], locs = status['user']['location'], timestamp=datetime.now())
+			tweet = Tweet(id = id_str, html=get_tweet_html(id_str), lat = status['geo']['coordinates'][0], lon=status['geo']['coordinates'][1], locs = status['user']['location'], timestamp=datetime.now(eastern))
 		else:
-			tweet = Tweet(id = id_str, html=get_tweet_html(id_str), lat = "", lon="", locs = status['user']['location'], timestamp=datetime.now())
-		dbsession.merge(tweet)
+			tweet = Tweet(id = id_str, html=get_tweet_html(id_str), lat = "", lon="", locs = status['user']['location'], timestamp=datetime.now(eastern))
+		db.session.merge(tweet)
 	
-	dbsession.commit()
+	db.session.commit()
 	return jsonify(**tweets_dict)
 
 # Load tweets from twitter
@@ -108,7 +106,3 @@ def get_tweet_html(id):
 		flash('whoops - couldn\'t get tweets :(')
 
 	return tweet_html['html']
-
-if __name__ == '__main__':
-	app.run(host='0.0.0.0', port=9393, debug=True)
-	app.config.from_object('config')

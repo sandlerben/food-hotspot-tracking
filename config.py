@@ -1,9 +1,10 @@
 import os
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-SQLALCHEMY_MIGRATE_REPO = os.path.join(basedir, 'db_repository')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL',     
+        'sqlite:///' + os.path.join(basedir, 'app.db'))
+SECRET_KEY =              os.getenv('SECRET_KEY',       'dev key')
 
 
 CSRF_ENABLED = True

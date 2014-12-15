@@ -60,5 +60,8 @@ docs/_build/
 # PyBuilder
 target/
 
-#Databases
+# Databases
 *.db
+
+# ENV
+ENV/*

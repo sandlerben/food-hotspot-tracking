@@ -4,10 +4,10 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="static/css/main.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=visualization,places"></script>
+	<script src="static/js/custom.js"></script>
 	<script type="text/javascript" src="static/js/masonry.min.js"></script>
-	
+
 	<script>
 		var map, pointarray, heatmap, tweetGeoData;
 
@@ -16,6 +16,17 @@
 			var mapOptions = {
 				zoom: 6,
 				center: new google.maps.LatLng(1, 38), // middle of Kenya
+				mapTypeControl: true,
+    			mapTypeControlOptions: {
+       				style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+        			position: google.maps.ControlPosition.BOTTOM_CENTER
+    			},
+				streetViewControl: false,
+				panControl: false,
+				zoomControl: true,
+    			zoomControlOptions: {
+        			position: google.maps.ControlPosition.LEFT_CENTER
+    			},
 				mapTypeId: google.maps.MapTypeId.MAP
 			};
 
@@ -68,15 +79,19 @@
 	<div id="map-wrapper">
 		<div id="map-canvas"></div>
 	</div>
-	<main>
-		<h1>Recent tweets in the area</h1>
+	<main class="cd-container">
+		<h1>Recent Tweets In The Area</h1>
 		<h6><center>Last scanned twitter at {{ most_recent_tweets[0].timestamp.strftime("%H:%M %p on %Y-%m-%d.") }}</center></h6>
+		<br>
 		<ul id="container">
 			{% for tweet in most_recent_tweets %}
 			<li class="item">{{ tweet.html|safe }}</li>
 			{% endfor %}
 		</ul>
 	</main>
+
+	<a href="#0" class="cd-top">Top</a>
+
 	<footer>
 		<div class="wrapper">
 			Built at Hack the Change 2014 by Max McCarthy, Yoni Nachmany, and Ben Sandler, and Nancy Wong.
@@ -100,6 +115,8 @@
 		interval = window.setInterval(function(){msnry.layout()}, 500);
 
 	</script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="static/js/main.js"></script> <!-- Gem jQuery -->
 </body>
 
 </html>
