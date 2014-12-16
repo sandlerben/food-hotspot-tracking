@@ -1,8 +1,8 @@
 from app import app, db
 
 class Tweet(db.Model):
-    __tablename__ = "Tweet"
-    id = db.Column(db.Integer, primary_key=True)
+    #__tablename__ = "Tweet"
+    id = db.Column(db.BigInteger, primary_key=True)
     lon = db.Column(db.String)
     lat = db.Column(db.String)
     html = db.Column(db.String)
