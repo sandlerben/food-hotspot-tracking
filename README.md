@@ -1,14 +1,16 @@
 Food Hotspot Tracking
 =====================
 
-#About the Project
-In order to effectively target areas in need, organizations such as the World Food Programme need a better way to identify food "hotspots,” i.e. places in the most dire situations of food shortages. Food Hotspot Tracking scans Twitter for tweets with contents related to hunger in Kenya. The locations of relevant tweets are plotted on a heatmap, generating a visualization of food insecurity.
+The web application is running at http://food-hotspot-tracking.herokuapp.com
+
+##About the project
+Organizations such as the World Food Programme need a better way to identify food "hotspots,” i.e. places in the most dire situations of food shortages. Food Hotspot Tracking scans Twitter for tweets with contents related to hunger in Kenya. The locations of relevant tweets are plotted on a heatmap, generating a visualization of food insecurity.
 
 ##How it works
 Social media conversation (Twitter, for example) provides a real time information feed that captures changes in key food security indicators. After identification, WFP considers these ‘hotspots’ as places to zoom into for further investigation. 
 
 ##Why Kenya?
-Kenya has a large amount of Twitter users and high food insecurity. Kenya largely depends on rain-fed agriculture, with about 80 percent of its land is arid or semi-arid. 1.5 million Kenyans are acutely food insecure and will require immediate food assistance over the next six months. Moreover, Twitter usage in Kenya is among the highest on the African continent due to the proliferation of mobile devices and SMS.
+Kenya largely depends on rain-fed agriculture, with about 80 percent of its land is arid or semi-arid. 1.5 million Kenyans are acutely food insecure and will require immediate food assistance over the next six months. Moreover, Twitter usage in Kenya is among the highest on the African continent due to the proliferation of mobile devices and SMS.
 
 ##Technologies Used For This Project 
 + [Flask](http://flask.pocoo.org) 
@@ -20,9 +22,6 @@ Kenya has a large amount of Twitter users and high food insecurity. Kenya largel
 + Python
 + HTML/CSS
 + JavaScript
-
-#How to get started
-The app is currently running at http://food-hotspot-tracking.herokuapp.com/.
 
 #About the World Food Programme
 Founded in 1961, the [World Food Programme](http://www.wfp.org/) pursues a vision of the world in which every man, woman and child has access at all times to the food needed for an active and healthy life. On average, WFP reaches more than 80 million people with food assistance in 75 countries each year. About 11,500 people work for the organization, most of them in remote areas, directly serving the hungry poor. 
