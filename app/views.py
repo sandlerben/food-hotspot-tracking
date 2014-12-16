@@ -4,7 +4,7 @@ from flask_oauth import OAuth
 # import os
 # import json, models
 from datetime import datetime
-from pytz import timezone
+#from pytz import timezone
 from models import Tweet
 # from models import dbsession
 # from flask.ext.sqlalchemy import SQLAlchemy
@@ -25,14 +25,14 @@ def refresh():
 	tweets_dict = get_tweets()
 	statuses = tweets_dict["statuses"]
 	html_list = []
-	eastern = timezone('US/Eastern')
+	#eastern = timezone('US/Eastern')
 	for status in statuses:
 		#html_list.append(get_tweet_html(status["id"])) #get_tweet_html(status["id"]
 		id_str = status["id"]
 		if(status['geo']):
-			tweet = Tweet(id = id_str, html=get_tweet_html(id_str), lat = status['geo']['coordinates'][0], lon=status['geo']['coordinates'][1], locs = status['user']['location'], timestamp=datetime.now(eastern))
+			tweet = Tweet(id = id_str, html=get_tweet_html(id_str), lat = status['geo']['coordinates'][0], lon=status['geo']['coordinates'][1], locs = status['user']['location'], timestamp=datetime.now())
 		else:
-			tweet = Tweet(id = id_str, html=get_tweet_html(id_str), lat = "", lon="", locs = status['user']['location'], timestamp=datetime.now(eastern))
+			tweet = Tweet(id = id_str, html=get_tweet_html(id_str), lat = "", lon="", locs = status['user']['location'], timestamp=datetime.now())
 		db.session.merge(tweet)
 	
 	db.session.commit()
