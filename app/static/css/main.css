@@ -12,7 +12,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 body {
   line-height: 1; 
-  background-color: #64B5F6;
+  background-color: #E3F2FD;
 }
 
 h1 {
@@ -51,7 +51,11 @@ html {
 }
 
 .wrapper h1 {
-  color: white;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+#pg h1{
+  color: rgba(255, 255, 255, 0.9);
 }
 
 #map-canvas {
