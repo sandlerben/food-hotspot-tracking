@@ -81,7 +81,7 @@
 	</div>
 	<main class="cd-container">
 		<h1>Recent Tweets In The Area</h1>
-		<h6><center>Last scanned twitter at {{ most_recent_tweets[0].timestamp.strftime("%H:%M %p on %Y-%m-%d.") }}</center></h6>
+		<h6><center>Last scanned twitter at {{ most_recent_tweets[0].timestamp.strftime("%H:%M %p") }}</center></h6>
 		<br>
 		<ul id="container">
 			{% for tweet in most_recent_tweets %}

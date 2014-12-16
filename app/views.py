@@ -1,13 +1,8 @@
 from flask import Flask, render_template, jsonify, session, flash
 from app import app, db
 from flask_oauth import OAuth
-# import os
-# import json, models
 from datetime import datetime
-#from pytz import timezone
 from models import Tweet
-# from models import dbsession
-# from flask.ext.sqlalchemy import SQLAlchemy
 
 @app.route('/')
 def page():
@@ -25,7 +20,6 @@ def refresh():
 	tweets_dict = get_tweets()
 	statuses = tweets_dict["statuses"]
 	html_list = []
-	#eastern = timezone('US/Eastern')
 	for status in statuses:
 		#html_list.append(get_tweet_html(status["id"])) #get_tweet_html(status["id"]
 		id_str = status["id"]
