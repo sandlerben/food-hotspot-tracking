@@ -4,7 +4,7 @@ Food Hotspot Tracking
 The application is running at http://food-hotspot-tracking.herokuapp.com
 
 ##About the project
-Organizations such as the World Food Programme need a better way to identify food "hotspots,” the places in the most dire situations of food shortages. Food Hotspot Tracking solves this problem by scanning Twitter for tweets with contents related to hunger in Kenya. Locations of relevant tweets are plotted on a heatmap, generating a visualization of food insecurity.
+Organizations such as the World Food Programme need a better way to identify food "hotspots,” the places with the most dire food shortages. Food Hotspot Tracking solves this problem by scanning Twitter for tweets with contents related to hunger in Kenya. Locations of relevant tweets are plotted on a heatmap, generating a visualization of food insecurity.
 
 ##How it works
 Social media conversation (Twitter, for example) provides a real time information feed that captures changes in key food security indicators. After identification, WFP considers these ‘hotspots’ as places to zoom into for further investigation. 
