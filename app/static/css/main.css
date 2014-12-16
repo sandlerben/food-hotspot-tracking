@@ -12,15 +12,15 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 body {
   line-height: 1; 
-  background-color: #795d6b;
+  background-color: #64B5F6;
 }
 
 h1 {
-    color: white;
+    color: black;
 }
 
 h6 {
-    color: white;
+    color: black;
 }
 
 ol, ul {
@@ -47,7 +47,12 @@ html {
 
 .wrapper {
   max-width: 960px;
-  margin: 0 auto; }
+  margin: 0 auto; 
+}
+
+.wrapper h1 {
+  color: white;
+}
 
 #map-canvas {
   padding: 0;
