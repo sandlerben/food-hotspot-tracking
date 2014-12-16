@@ -81,7 +81,6 @@
 	</div>
 	<main class="cd-container">
 		<h1>Recent Tweets In The Area</h1>
-		<br>
 		<ul id="container">
 			{% for tweet in most_recent_tweets %}
 			<li class="item">{{ tweet.html|safe }}</li>
