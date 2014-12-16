@@ -1,7 +1,7 @@
 Food Hotspot Tracking
 =====================
 
-The web application is running at http://food-hotspot-tracking.herokuapp.com
+The application is running at http://food-hotspot-tracking.herokuapp.com
 
 ##About the project
 Organizations such as the World Food Programme need a better way to identify food "hotspots,” i.e. places in the most dire situations of food shortages. Food Hotspot Tracking scans Twitter for tweets with contents related to hunger in Kenya. The locations of relevant tweets are plotted on a heatmap, generating a visualization of food insecurity.
